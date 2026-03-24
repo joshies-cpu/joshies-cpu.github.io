@@ -1,170 +1,137 @@
 ---
-title: "TaskFlow - Project Management Tool"
-date: 2024-09-20
-summary: "Real-time collaborative task management application with drag-and-drop Kanban boards and team features"
+title: "Autonomous Wheelchair Navigation System"
+date: 2025-06-01
+summary: "ROS2-powered autonomous indoor navigation system with SLAM, Nav2, LiDAR obstacle avoidance, and micro-ROS ESP32 firmware for real-time odometry."
 tags:
   - Full-Stack
-  - Next.js
-  - Real-Time
-  - Productivity
+  - Robotics
+  - Embedded
+  - ROS2
 tech_stack:
-  - Next.js
-  - TypeScript
-  - Prisma
-  - PostgreSQL
-  - WebSockets
-  - Tailwind CSS
+  - ROS2
+  - Nav2
+  - SLAM Toolbox
+  - micro-ROS
+  - ESP32
+  - C++
+  - Python
 links:
   - type: github
-    url: https://github.com/alexjohnson/taskflow
+    url: https://github.com/joshies-cpu
     label: Code
-  - type: live
-    url: https://taskflow-demo.example.com
-    label: Demo
 featured: true
-status: "Live"
+status: "Completed"
 role: "Solo Developer"
-duration: "2 months"
-team_size: 1
+duration: "6 months"
 highlights:
-  - "Real-time collaboration with WebSockets"
-  - "2000+ active users"
-  - "Featured on Product Hunt"
+  - "50Hz real-time odometry publishing"
+  - "Full SLAM + Nav2 autonomous navigation"
+  - "micro-ROS serial at 115.2 kbps"
+  - "Safety firmware with command timeouts & velocity smoothing"
 ---
 
-A modern, intuitive task management tool built for remote teams. Features real-time collaboration, customizable workflows, and beautiful UI.
+A full-stack autonomous navigation system for a wheelchair platform, integrating ROS2, SLAM Toolbox, Nav2, and micro-ROS firmware on an ESP32 microcontroller for real-time indoor mapping and path planning.
 
 ## Overview
 
-TaskFlow was born out of frustration with existing project management tools being either too complex or lacking essential features. I built a solution that's powerful yet simple to use.
+Built an end-to-end autonomous navigation system capable of mapping unknown indoor environments and navigating to goal poses without human input. The system combines a ROS2 software stack with custom embedded firmware on an ESP32.
 
 ## Key Features
 
-### Core Functionality
-- **Kanban Boards** - Drag-and-drop interface for visual task management
-- **Real-Time Sync** - See changes instantly as team members update tasks
-- **Multiple Views** - Switch between Kanban, List, and Calendar views
-- **Task Details** - Rich descriptions, attachments, comments, and checklists
-- **Labels & Filters** - Organize and find tasks quickly
+### Embedded Firmware (ESP32 + micro-ROS)
+- **Differential Drive Kinematics** — PID-controlled 4-wheel motion with smooth velocity profiles
+- **Real-Time Odometry** — Wheel encoder-based odometry published to ROS2 at **50Hz**
+- **micro-ROS Serial** — Bidirectional ROS2 communication over serial at **115,200 bps**
+- **Safety Systems** — Command timeouts, acceleration limits, and velocity smoothing to prevent unsafe manoeuvres
 
-### Collaboration
-- **Team Workspaces** - Separate spaces for different projects/teams
-- **@Mentions** - Tag team members in comments for notifications
-- **Activity Feed** - Track all changes and updates
-- **Permissions** - Role-based access control (admin, member, viewer)
+### ROS2 Navigation Stack
+- **SLAM Toolbox** — Real-time simultaneous localization and mapping (SLAM) for unknown indoor environments
+- **Nav2** — Full autonomous path planning, obstacle avoidance, and goal execution
+- **LiDAR Integration** — RPLiDAR A1 sensor for environment perception and obstacle detection
+- **EKF Localization** — Encoder-fused odometry via `robot_localization` package
 
-### Productivity
-- **Keyboard Shortcuts** - Power user features for faster navigation
-- **Templates** - Reusable board templates for common workflows
-- **Due Dates & Reminders** - Never miss a deadline
-- **Time Tracking** - Built-in timer for task duration tracking
-
-## Technical Implementation
-
-### Real-Time Features
-Used WebSockets (Socket.io) for instant updates across all connected clients. Implemented optimistic UI updates for snappy user experience even before server confirmation.
-
-### Drag & Drop
-Built custom drag-and-drop using react-beautiful-dnd with smooth animations and mobile touch support.
-
-### Performance
-- Implemented virtual scrolling for boards with 1000+ tasks
-- Optimized database queries with proper indexing
-- Used Redis for session storage and caching
-- Image optimization with Next.js Image component
-
-### Authentication
-- Secure auth with NextAuth.js
-- Support for email/password and OAuth (Google, GitHub)
-- JWT tokens with automatic refresh
+### Software Architecture
+- Modular ROS2 node design for firmware-to-stack interoperability
+- Custom launch files for SLAM, navigation, and sensor bringup
+- Docker-based micro-ROS agent for reliable host-side connectivity
 
 ## Architecture
 
-Built as a modern monolith with Next.js API routes:
-
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Next.js    │────▶│   API Routes │────▶│ PostgreSQL  │
-│  (React)    │     │  (REST/WS)   │     │  + Prisma   │
-└─────────────┘     └──────────────┘     └─────────────┘
-       │                    │
-       │             ┌──────▼───────┐
-       └────────────▶│  Socket.io   │
-                     │  (Real-Time) │
-                     └──────────────┘
+┌──────────────────────────────────────────────────────────┐
+│               ROS2 Host (Laptop / SBC)                   │
+│                                                          │
+│  ┌──────────────┐  ┌───────────────┐  ┌──────────────┐  │
+│  │ SLAM Toolbox │  │     Nav2      │  │    RViz2     │  │
+│  │  (Mapping)   │  │  (Planning)   │  │ (Visualizer) │  │
+│  └──────┬───────┘  └──────┬────────┘  └──────────────┘  │
+│         │                 │                              │
+│  ┌──────▼─────────────────▼──────────────────────────┐  │
+│  │             ROS2 Topic Bus                         │  │
+│  │  /odom  /scan  /cmd_vel  /map  /tf                 │  │
+│  └──────────────────────┬──────────────────────────── ┘  │
+│                         │                                │
+│         ┌───────────────▼───────────────┐               │
+│         │      micro-ROS Agent          │               │
+│         │    (Serial Bridge, Docker)    │               │
+│         └───────────────┬───────────────┘               │
+└─────────────────────────│────────────────────────────────┘
+                          │ UART 115200 bps
+┌─────────────────────────▼────────────────────────────────┐
+│                  ESP32 Firmware                           │
+│                                                          │
+│  ┌────────────────────┐   ┌──────────────────────────┐  │
+│  │  Differential Drive│   │   Odometry Publisher     │  │
+│  │  PID Controller    │   │   (50Hz, wheel encoders) │  │
+│  └────────────────────┘   └──────────────────────────┘  │
+│           ↕ Motor PWM              ↕ Encoder Interrupts  │
+│      ┌────────┐               ┌────────────────────┐    │
+│      │ Motors │               │   Wheel Encoders   │    │
+│      └────────┘               └────────────────────┘    │
+└──────────────────────────────────────────────────────────┘
 ```
 
-## Challenges Solved
+## Performance
 
-### Real-Time Conflicts
-**Problem**: Multiple users editing same task simultaneously
+| Metric | Value |
+|---|---|
+| Odometry update rate | 50 Hz |
+| Serial communication | 115,200 bps |
+| Navigation | Fully autonomous (SLAM + Nav2) |
+| Safety | Command timeout + velocity smoothing |
 
-**Solution**: Implemented operational transformation (OT) for conflict resolution and last-write-wins strategy with conflict notifications
+## Challenges & Solutions
 
-### Mobile Performance
-**Problem**: Drag-and-drop laggy on mobile devices
+### Challenge: Micro-ROS Time Synchronization
+**Problem**: Message timestamps drifted between ESP32 and ROS2 host, causing TF tree issues.
 
-**Solution**: Optimized touch handlers and reduced re-renders using React.memo and useMemo
+**Solution**: Implemented micro-ROS time synchronization protocol to align clocks between the microcontroller and the ROS2 agent.
 
-### Scale
-**Problem**: Growing user base causing performance issues
+### Challenge: Reliable Serial Communication
+**Problem**: Serial drops caused the navigation stack to send unchecked velocity commands.
 
-**Solution**: Added Redis caching layer and optimized database queries, reducing response time by 65%
+**Solution**: Added command watchdog timer in firmware — if no `/cmd_vel` message is received within a threshold, the motors halt automatically.
 
-## Results
+### Challenge: SLAM Accuracy in Featureless Corridors
+**Problem**: LiDAR-based SLAM struggled in long, uniform corridors.
 
-- 📈 **Users**: 2000+ active users within 3 months
-- ⭐ **Product Hunt**: Featured and received 200+ upvotes
-- 🚀 **Performance**: Sub-100ms API response times
-- 💯 **Uptime**: 99.8% uptime since launch
-- 📱 **Mobile**: 40% of traffic from mobile devices
+**Solution**: Tuned SLAM Toolbox parameters (scan matching scores, search window sizes) and added IMU data for improved localization robustness.
 
 ## Tech Stack
 
-**Frontend**
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS
-- Framer Motion (animations)
-- React Beautiful DnD
-
-**Backend**
-- Next.js API Routes
-- Prisma ORM
-- PostgreSQL
-- Socket.io for WebSockets
-- NextAuth.js for authentication
-
-**Infrastructure**
-- Vercel for hosting
-- Supabase for PostgreSQL
-- Redis Cloud for caching
-- AWS S3 for file storage
-
-## User Feedback
-
-> "Finally, a task manager that doesn't get in my way. The real-time updates are magical!" - Sarah K., Product Manager
-
-> "We switched from Trello and haven't looked back. TaskFlow is faster and more intuitive." - Mike R., Engineering Lead
-
-## Open Source
-
-TaskFlow is open source! Contributions welcome.
-
-**License**: MIT  
-**GitHub**: [alexjohnson/taskflow](https://github.com/alexjohnson/taskflow)  
-**Demo**: [Try it live](https://taskflow-demo.example.com)
-
-## What's Next
-
-Currently working on:
-- [ ] Mobile apps (iOS & Android)
-- [ ] Gantt chart view
-- [ ] Advanced reporting and analytics
-- [ ] API for third-party integrations
-- [ ] Offline mode support
+| Layer | Technology |
+|---|---|
+| Firmware | C++ on ESP32 |
+| RTOS Bridge | micro-ROS |
+| Robot OS | ROS2 Humble |
+| SLAM | SLAM Toolbox |
+| Navigation | Nav2 |
+| Localization | robot_localization (EKF) |
+| Sensor | RPLiDAR A1 |
+| Simulation | Gazebo |
+| Visualization | RViz2 |
 
 ---
 
-**Status**: ✅ Live & Actively Maintained  
-**Try it**: [taskflow-demo.example.com](https://taskflow-demo.example.com)
+**Status**: ✅ Completed — First Place at Shristi Project Exhibition, Saintgits College of Engineering  
+**GitHub**: [View on GitHub](https://github.com/joshies-cpu)

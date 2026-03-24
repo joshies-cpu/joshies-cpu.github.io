@@ -1,167 +1,115 @@
 ---
-title: "E-Commerce Platform"
-date: 2024-11-15
-summary: "E-commerce API backend with Stripe payments, inventory management, and real-time webhooks"
-tags: 
+title: "Enterprise Hybrid-RAG Platform"
+date: 2025-10-01
+summary: "Privacy-first AI backend combining static documentation with real-time data streams using Llama 3 and Chroma DB, achieving <500ms query latency."
+tags:
+  - Full-Stack
   - Backend
-  - Node.js
-  - API
-  - E-Commerce
+  - AI
+  - RAG
 tech_stack:
-  - React
-  - TypeScript
-  - Node.js
-  - Express
-  - PostgreSQL
-  - Stripe
-  - Redis
+  - Python
+  - FastAPI
+  - Chroma DB
   - Docker
+  - Llama 3
+  - Ollama
 links:
   - type: github
-    url: https://github.com/alexjohnson/ecommerce-platform
+    url: https://github.com/joshies-cpu
     label: Code
-  - type: live
-    url: https://shop-demo.example.com
-    label: Demo
 featured: true
-status: "Live"
-role: "Lead Developer"
-duration: "4 months"
-team_size: 2
+status: "Completed"
+role: "Solo Developer"
+duration: "3 months"
 highlights:
-  - "Handles 10k+ concurrent users"
-  - "99.9% uptime SLA"
-  - "Processing $50k+ monthly transactions"
-  - "60% faster page load vs competitors"
+  - "<500ms query latency achieved"
+  - "Hybrid search over static + live data"
+  - "Fully local, privacy-first AI deployment"
+  - "Scalable ETL pipeline for unstructured PDFs"
 ---
 
-A modern, scalable e-commerce platform built from scratch with performance and user experience as top priorities.
+A privacy-first, production-grade AI backend that synthesizes static documentation with high-frequency real-time data using a custom Hybrid RAG architecture.
 
 ## Overview
 
-Built a complete e-commerce solution for a mid-sized retail company looking to expand online. The platform handles everything from product catalog management to payment processing and order fulfillment.
+Designed and built an end-to-end AI platform that allows users to query both indexed knowledge bases (PDFs, source code) and live system metrics through a unified interface — all without sending data to any external API.
 
 ## Key Features
 
-### Customer-Facing
-- **Product Catalog** - Dynamic filtering, sorting, and search with instant results
-- **Shopping Cart** - Real-time inventory checking and price calculations
-- **Checkout** - Secure payment processing via Stripe with Apple Pay/Google Pay support
-- **Order Tracking** - Real-time order status updates with email notifications
-- **User Accounts** - Profile management, order history, and saved addresses
+### Hybrid Retrieval Engine
+- **Static Knowledge Base** — Unstructured PDFs and source code indexed into a Chroma DB vector store using `pdfminer.six`
+- **Real-Time Data Watcher** — Python-based watcher ingesting live system metrics and logs into the retrieval pipeline
+- **Custom Hybrid Search** — Blends vector similarity search with keyword filtering for optimized, context-aware retrieval
 
-### Admin Dashboard
-- **Inventory Management** - Real-time stock tracking and low-stock alerts
-- **Order Management** - Bulk order processing and fulfillment workflow
-- **Analytics** - Sales dashboards, customer insights, and revenue reporting
-- **Product Management** - Easy product creation with image uploads and variants
+### AI Backend
+- **Ollama + Llama 3** — Fully local LLM inference with no cloud dependency
+- **FastAPI** — High-performance async REST API for chat and query endpoints
+- **Docker** — Containerized deployment for reproducibility and portability
 
-## Technical Highlights
-
-### Performance Optimization
-- Implemented Redis caching reducing database queries by 70%
-- Optimized images with WebP format and lazy loading
-- Server-side rendering for critical pages improving SEO and load times
-- CDN integration for global content delivery
-
-### Scalability
-- Microservices architecture allowing independent scaling
-- Horizontal scaling with load balancing
-- Database read replicas for improved query performance
-- Message queues for async processing (order emails, inventory updates)
-
-### Security
-- JWT authentication with refresh tokens
-- Rate limiting to prevent abuse
-- Input validation and sanitization
-- PCI-compliant payment processing via Stripe
+### ETL Pipeline
+- Automated ingestion of PDF documents using `pdfminer.six`
+- Chunking, embedding, and upserting into Chroma DB vector collections
+- Real-time metric streaming into the knowledge pipeline
 
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  React SPA  │────▶│   REST API   │────▶│ PostgreSQL  │
-└─────────────┘     │  (Express)   │     └─────────────┘
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │    Redis     │
-                    │   (Cache)    │
-                    └──────────────┘
+┌─────────────────────────────────────────────────────┐
+│                  FastAPI Backend                     │
+│                                                     │
+│  ┌──────────────┐      ┌────────────────────────┐  │
+│  │ ETL Pipeline │      │  Real-Time Data Watcher│  │
+│  │ (pdfminer)   │      │  (live metrics/logs)   │  │
+│  └──────┬───────┘      └──────────┬─────────────┘  │
+│         │                         │                 │
+│         ▼                         ▼                 │
+│  ┌──────────────────────────────────────────────┐  │
+│  │            Chroma DB Vector Store             │  │
+│  │       (static + real-time embeddings)         │  │
+│  └───────────────────┬──────────────────────────┘  │
+│                      │                              │
+│         ┌────────────▼────────────┐                 │
+│         │  Hybrid Search Engine   │                 │
+│         └────────────┬────────────┘                 │
+│                      │                              │
+│         ┌────────────▼────────────┐                 │
+│         │   Ollama (Llama 3)      │                 │
+│         │   Local LLM Inference   │                 │
+│         └─────────────────────────┘                 │
+└─────────────────────────────────────────────────────┘
 ```
+
+## Performance
+
+- **Query Latency**: Achieved **<500ms** end-to-end response time including retrieval + LLM inference
+- **Privacy**: 100% local — no data leaves the machine
+- **Scalability**: ETL pipeline handles large PDF corpora and continuous real-time ingestion
 
 ## Challenges & Solutions
 
-### Challenge 1: Inventory Sync
-**Problem**: Multiple users buying same product simultaneously causing overselling
+### Challenge: Combining Static and Live Data
+**Problem**: Vector stores are typically static; live data needed to be queryable in near real-time.
 
-**Solution**: Implemented optimistic locking with Redis to ensure inventory accuracy during concurrent purchases
+**Solution**: Built a Python Real-Time Data Watcher that continuously ingests and embeds live metrics, upserting them into Chroma DB on configurable intervals.
 
-### Challenge 2: Payment Processing
-**Problem**: Handling payment failures gracefully while maintaining order integrity
+### Challenge: Retrieval Accuracy
+**Problem**: Pure vector search lost precision for keyword-heavy queries.
 
-**Solution**: Built robust state machine for order processing with automatic retry logic and customer notifications
+**Solution**: Designed a custom Hybrid Search algorithm combining dense vector retrieval with BM25-style keyword scoring, improving answer quality significantly.
 
-### Challenge 3: Performance at Scale
-**Problem**: Slow page loads during traffic spikes
+## Tech Stack
 
-**Solution**: Implemented multi-layer caching strategy (CDN, Redis, in-memory) and database query optimization
-
-## Results
-
-- **Performance**: 60% faster page load times compared to previous platform
-- **Conversion**: 25% increase in conversion rate due to improved UX
-- **Uptime**: 99.9% uptime over 6 months in production
-- **Scale**: Successfully handled Black Friday with 10k concurrent users
-- **Revenue**: Processing over $50k in monthly transactions
-
-## Tech Stack Details
-
-**Frontend**
-- React 18 with TypeScript
-- Tailwind CSS for styling
-- React Query for data fetching
-- React Hook Form for forms
-
-**Backend**
-- Node.js with Express
-- PostgreSQL with Prisma ORM
-- Redis for caching and sessions
-- Bull for job queues
-
-**Infrastructure**
-- Docker containers
-- AWS EC2 for hosting
-- AWS S3 for image storage
-- Cloudflare CDN
-- GitHub Actions for CI/CD
-
-**Payment & Services**
-- Stripe for payments
-- SendGrid for emails
-- Sentry for error tracking
-
-## Future Improvements
-
-- [ ] Mobile app (React Native)
-- [ ] Multi-language support
-- [ ] Wishlist and product recommendations
-- [ ] Live chat support
-- [ ] Advanced analytics dashboard
-
-## Screenshots
-
-*(Screenshots would go here in production)*
-
-## Lessons Learned
-
-1. **Start with Performance**: Built with performance in mind from day one rather than optimizing later
-2. **Testing Matters**: Comprehensive test suite caught critical bugs before production
-3. **Monitor Everything**: Proper logging and monitoring essential for maintaining uptime
-4. **User Feedback**: Regular user testing revealed UX issues we wouldn't have found otherwise
+| Layer | Technology |
+|---|---|
+| Framework | FastAPI |
+| LLM | Llama 3 via Ollama |
+| Vector DB | Chroma DB |
+| ETL | pdfminer.six, custom Python |
+| Container | Docker |
+| Language | Python |
 
 ---
 
-**Project Status**: ✅ Live in Production  
-**GitHub**: [View Source Code](https://github.com/alexjohnson/ecommerce-platform)  
-**Demo**: [Try it Live](https://shop-demo.example.com)
+**Status**: ✅ Completed  
+**GitHub**: [View on GitHub](https://github.com/joshies-cpu)

@@ -392,6 +392,6 @@ Don't optimize blindly—profile, fix, measure, repeat!
 
 ---
 
-**Want to dive deeper?** Check out my [React Performance Workshop](https://github.com/alexjohnson/react-perf-workshop).
+**Want to dive deeper?** Check out my [GitHub](https://github.com/joshies-cpu) for more projects.
 
-Questions? Reach out on [Twitter](https://twitter.com/alexjohnson)!
+Questions? Reach out at [joshincherian5@gmail.com](mailto:joshincherian5@gmail.com)!

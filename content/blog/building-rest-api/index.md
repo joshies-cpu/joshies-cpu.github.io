@@ -442,7 +442,7 @@ Building production-ready APIs requires attention to:
 - **Documentation**: Clear API docs for consumers
 - **Performance**: Caching and optimization
 
-The complete example code is available on [GitHub](https://github.com/alexjohnson/rest-api-guide).
+More on my projects at [GitHub](https://github.com/joshies-cpu).
 
 ## Resources
 
@@ -452,4 +452,4 @@ The complete example code is available on [GitHub](https://github.com/alexjohnso
 
 ---
 
-Questions? Leave a comment below or reach out on [Twitter](https://twitter.com/alexjohnson)!
+Questions? Reach out at [joshincherian5@gmail.com](mailto:joshincherian5@gmail.com)!

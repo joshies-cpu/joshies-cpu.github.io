@@ -2,99 +2,136 @@ schema: hugoblox/author/v1
 slug: me
 is_owner: true
 name:
-  display: Alex Johnson
-  given: Alex
-  family: Johnson
+  display: Joshin D Cherian
+  given: Joshin
+  family: Cherian
 postnominals: []
 status:
-  icon: "💻"  # Emoji shown on avatar badge: 💻 developer, 🎨 designer, 🚀 startup, 🔬 researcher, 🎓 student
-role: Full-Stack Developer
-email: alex@example.com
+  icon: "🤖"
+role: Software Engineer | AI & Robotics
+email: joshincherian5@gmail.com
+phone: "+91-8547505624"
 bio: |
-  Full-stack developer with 5+ years of experience building scalable web applications.
-  Passionate about modern JavaScript, cloud architecture, and creating delightful user experiences.
+  Software Engineer specializing in AI-driven ETL pipelines and Retrieval-Augmented Generation (RAG) systems.
+  Experienced in architecting scalable backend solutions using Python, FastAPI, and Vector Databases.
+  Actively leveraging a background in Robotics and Automation to build efficient, autonomous software architectures.
 
 affiliations:
-  - name: Tech Corp
-    url: https://techcorp.example.com
+  - name: Saintgits College of Engineering
+    url: https://saintgits.org
 
 links:
   - icon: at-symbol
-    url: mailto:alex@example.com
+    url: mailto:joshincherian5@gmail.com
     label: E-mail Me
   - icon: brands/github
-    url: https://github.com/alexjohnson
+    url: https://github.com/joshies-cpu
   - icon: brands/linkedin
-    url: https://www.linkedin.com/in/alexjohnson/
-  - icon: brands/x
-    url: https://x.com/alexjohnson
+    url: https://www.linkedin.com/in/joshin-cherian/
 
 interests:
-  - Web Development
-  - Cloud Architecture
-  - Open Source
-  - Developer Experience
+  - AI & RAG Systems
+  - Robotics & Automation
+  - Backend Engineering
+  - ETL Pipelines
+  - Embedded Systems
 
 education:
-  - degree: B.S. Computer Science
-    institution: State University
-    start: 2015-09-01
-    end: 2019-05-31
+  - degree: B.Tech in Robotics and Automation
+    institution: Saintgits College of Engineering
+    start: 2022-09-01
+    end: 2026-05-31
     summary: |
-      Focus on software engineering and distributed systems.
-      Senior project on distributed caching systems.
-    button:
-      text: View Project
-      url: https://github.com/alexjohnson/senior-project
-      icon: brands/github
+      CGPA: 6.98. Focus on robotics, automation, and embedded systems.
+      Final year project on Autonomous Wheelchair Navigation using ROS2 and Nav2.
+
+  - degree: 12th Grade (89%)
+    institution: Marthoma Higher Secondary School
+    start: 2020-06-01
+    end: 2022-03-31
+    summary: |
+      Higher Secondary — Chengannur, Kerala.
+
+  - degree: 10th Grade (77%)
+    institution: Cherupushpa Bethany Higher Secondary School
+    start: 2018-06-01
+    end: 2020-03-31
+    summary: |
+      Secondary School — Chunakara, Kerala.
 
 experience:
-  - role: Senior Software Engineer
-    org: Tech Corp
-    start: 2023-01-01
+  - role: Intern — Robotics & Automation
+    org: Galexon Engineering Industries
+    start: 2025-06-01
+    end: 2025-06-27
     summary: |
-      Lead development of microservices architecture serving 1M+ users.
-      Improved API response time by 40% through optimization.
-      Mentored team of 5 junior developers.
-  - role: Full-Stack Developer
-    org: Startup Inc
-    start: 2021-06-01
-    end: 2022-12-31
-    summary: |
-      Built and deployed 3 production applications from scratch.
-      Implemented CI/CD pipeline reducing deployment time by 60%.
-      Led migration from monolith to microservices architecture.
-  - role: Junior Developer
-    org: Web Agency
-    start: 2020-01-01
-    end: 2021-05-31
-    summary: |
-      Developed client websites using React and modern web technologies.
-      Participated in code reviews and agile ceremonies.
+      Assisted in development and maintenance of automated control systems optimizing industrial machinery workflows.
+      Conducted diagnostic tests on robotic subsystems to resolve software/hardware integration bottlenecks.
+      Programmed and debugged PLC logic for sequential manufacturing automation.
+      Utilized RoboDK to create digital twins for offline robotic simulation and testing.
 
 skills:
-  - name: Development
+  - name: Programming
     items:
-      - label: TypeScript
-        level: 5
-      - label: React
-        level: 5
-      - label: Node.js
-        level: 5
       - label: Python
+        level: 5
+      - label: C/C++
         level: 4
-  - name: DevOps
+      - label: JavaScript
+        level: 3
+      - label: HTML / XML
+        level: 3
+  - name: AI & ML
+    items:
+      - label: RAG Systems
+        level: 5
+      - label: Vector Embeddings
+        level: 5
+      - label: ETL Pipelines
+        level: 5
+      - label: PyTorch
+        level: 3
+      - label: Llama 3
+        level: 4
+  - name: APIs & Backend
+    items:
+      - label: FastAPI
+        level: 5
+      - label: Flask
+        level: 4
+      - label: Firebase
+        level: 3
+      - label: Rasa
+        level: 3
+  - name: DevOps & Tools
     items:
       - label: Docker
         level: 4
-      - label: AWS
-        level: 4
-      - label: CI/CD
+      - label: Git / GitHub
         level: 5
+      - label: Postman
+        level: 4
+  - name: Engineering
+    items:
+      - label: ROS2 / Nav2
+        level: 5
+      - label: PLC Programming
+        level: 3
+      - label: MATLAB
+        level: 3
+      - label: SolidWorks
+        level: 3
 
 languages:
   - name: English
     level: 5
+    label: Fluent
+  - name: Malayalam
+    level: 5
     label: Native
 
-awards: []
+awards:
+  - "First Place — Shristi Project Exhibition at Saintgits College of Engineering (Best Robotics & Automation project)"
+  - "AI Conclave Hackathon — Built 24-hour Rasa + FastAPI chatbot for a grocery business"
+  - "Exploratory Data Analysis of Machine Learning (Coursera)"
+  - "Python Data Structures (Coursera)"

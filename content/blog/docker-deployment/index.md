@@ -521,6 +521,6 @@ Start small, optimize incrementally, and always test in staging before productio
 
 ---
 
-**Example repo**: [github.com/alexjohnson/docker-guide](https://github.com/alexjohnson/docker-guide)
+**Example repo**: [github.com/joshies-cpu](https://github.com/joshies-cpu)
 
-Questions? Reach out on [Twitter](https://twitter.com/alexjohnson)!
+Questions? Reach out at [joshincherian5@gmail.com](mailto:joshincherian5@gmail.com)!
